@@ -25,6 +25,9 @@ public class User  {
     @Column(name = "fullname", length = 100)
     private String fullName;
 
+    @Column(name = "gmail")
+    private String gmail;
+
     @Column(name = "phone_number", length = 10, nullable = false)
     private String phoneNumber;
 
