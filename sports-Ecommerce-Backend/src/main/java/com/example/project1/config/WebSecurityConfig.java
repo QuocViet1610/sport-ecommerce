@@ -32,6 +32,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
+    @Value("${api.prefix}")
+    private String apiPrefix;
 
     @Value("${jwt.signerKey}")
     private String signerKey;
@@ -39,10 +41,14 @@ public class WebSecurityConfig {
     private final Pair<String, HttpMethod>[] PUBLIC_ENDPOINTS = new Pair[] {
 //            Pair.of("/users", HttpMethod.GET),
 //            Pair.of("/users", HttpMethod.POST),
-            Pair.of("/auth/token", HttpMethod.POST),
+            Pair.of("/auth/login", HttpMethod.POST),
             Pair.of("/auth/introspect", HttpMethod.POST),
             Pair.of("/auth/logout", HttpMethod.POST),
-            Pair.of("/auth/refresh", HttpMethod.POST)
+            Pair.of("/auth/refresh", HttpMethod.POST),
+            Pair.of("/user/register", HttpMethod.POST),
+            Pair.of("/auth/register", HttpMethod.POST),
+            Pair.of("/auth/verify-otp", HttpMethod.POST),
+            Pair.of("/api/v1/auth/login", HttpMethod.POST)
     };
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

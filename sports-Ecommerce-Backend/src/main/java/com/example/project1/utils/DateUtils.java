@@ -1,4 +1,4 @@
-package com.example.project1.util;
+package com.example.project1.utils;
 
 import java.time.OffsetDateTime;
 

@@ -1,6 +1,6 @@
 package com.example.project1.module.User.service;
 
-import com.example.project1.model.dto.PermissionDto;
+import com.example.project1.model.dto.User.PermissionDto;
 import com.example.project1.model.dto.request.PermissionRequest;
 
 import java.util.List;

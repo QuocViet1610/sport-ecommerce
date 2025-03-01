@@ -1,16 +1,12 @@
-package com.example.project1.model.enity;
+package com.example.project1.model.enity.User;
+
+import com.example.project1.model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Set;
 
 @Table(name = "users")
 @Entity
@@ -22,26 +18,17 @@ public class User  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "fullname", length = 100)
+    @Column(name = "full_name")
     private String fullName;
 
-    @Column(name = "gmail")
-    private String gmail;
+    @Column(name = "email")
+    private String email;
 
-    @Column(name = "phone_number", length = 10, nullable = false)
-    private String phoneNumber;
+    @Column(name = "phone")
+    private String phone;
 
-    @Column(name = "address", length = 200)
-    private String address;
-
-    @Column(name = "password", length = 200, nullable = false)
+    @Column(name = "password")
     private String password;
-
-    @Column(name = "is_active")
-    private boolean active;
-
-    @Column(name = "date_of_birth")
-    private Date dateOfBirth;
 
     @Column(name = "facebook_account_id")
     private int facebookAccountId;
@@ -49,6 +36,18 @@ public class User  {
     @Column(name = "google_account_id")
     private int googleAccountId;
 
+    @Column(name = "avatar")
+    private String avatar;
 
+    @Column(name = "password_changed_at")
+    private OffsetDateTime passwordChangedAt;
 
+    @Column(name = "is_active")
+    private Integer isActive;
+
+    @Column(name = "created_at")
+    private OffsetDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private OffsetDateTime updatedAt;
 }

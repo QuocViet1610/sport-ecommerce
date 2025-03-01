@@ -1,6 +1,7 @@
 package com.example.project1.model.dto;
 
 import com.example.project1.local.Translator;
+import com.example.project1.utils.DateUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ public class ResponseResult<T> {
     private String code;
     private String message;
     private T data;
+    private String errorCode;
 
     public static <T> ResponseResult<T> ofSuccess(T data) {
         ResponseResult<T> ResponseResult = new ResponseResult<>();
@@ -54,6 +56,15 @@ public class ResponseResult<T> {
         ResponseResult.setDatetime(date.toString());
         return ResponseResult;
     }
+
+    public static <T> ResponseResult<T> ofFail(String message, String errorCode) {
+        ResponseResult<T> ResponseResult = new ResponseResult<>();
+        ResponseResult.setMessage(message);
+        ResponseResult.setErrorCode(errorCode);
+        ResponseResult.setDatetime(DateUtils.timeServerNow());
+        return ResponseResult;
+    }
+
 
     public static <T> ResponseResult<T> unAuthorization(String message) {
         ResponseResult<T> ResponseResult = new ResponseResult<>();

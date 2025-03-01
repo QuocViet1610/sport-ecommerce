@@ -3,7 +3,7 @@ spring:
         name: project1
 
     datasource:
-        url: jdbc:mysql://localhost:3306/project1
+        url: jdbc:mysql://localhost:3306/sport_ecommerce
         username: root
         password: 123456
 
@@ -11,6 +11,21 @@ spring:
         show-sql: true
         hibernate:
             ddl-auto: update
+
+    mail:
+        host: smtp.gmail.com
+        port: 465
+        username: vietddls06@gmail.com
+        password: loeavfbmttsgqnlu
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+
+api:
+    prefix: /api/v1
 
 server:
     port: 8080

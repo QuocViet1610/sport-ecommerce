@@ -1,19 +1,18 @@
 package com.example.project1.module.controller.account;
 import com.example.project1.model.dto.ResponseResult;
-import com.example.project1.model.dto.UserDto;
+import com.example.project1.model.dto.User.UserDto;
 import com.example.project1.model.dto.request.UserCreateRequest;
 import com.example.project1.module.User.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 @Slf4j
 public class UserController {
@@ -33,7 +32,7 @@ public class UserController {
         return ResponseResult.ofSuccess(userService.findAll());
     }
 
-    @PostMapping()
+    @PostMapping("/register")
     public ResponseResult<UserDto> createUser(@RequestBody @Valid UserCreateRequest request){
         return ResponseResult.ofSuccess(userService.create(request));
     }

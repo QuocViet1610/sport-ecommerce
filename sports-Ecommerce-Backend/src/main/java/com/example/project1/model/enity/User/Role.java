@@ -1,4 +1,4 @@
-package com.example.project1.model.enity;
+package com.example.project1.model.enity.User;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,9 +14,15 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 public class Role {
+
     @Id
-    String name;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    String description;
+    private String name;
 
+    private String description;
+
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
+    private Set<UserRole> userRoles;
 }

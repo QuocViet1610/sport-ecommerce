@@ -1,6 +1,6 @@
 package com.example.project1.local;
 
-import com.example.project1.util.TokenUtil;
+import com.example.project1.utils.TokenUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;

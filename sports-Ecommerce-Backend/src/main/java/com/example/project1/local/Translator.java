@@ -1,6 +1,6 @@
 package com.example.project1.local;
 
-import com.example.project1.util.TokenUtil;
+import com.example.project1.utils.TokenUtil;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
@@ -27,8 +27,10 @@ public class Translator {
 
     public static String toMessage(String keyMessage) {
         // Lấy ngôn ngữ từ TokenUtil thông qua phương thức tĩnh
-        String language = tokenUtil != null ? tokenUtil.getLanguage() : "vi"; // Ngôn ngữ mặc định là "vi"
-        Locale locale = Locale.forLanguageTag(language != null ? language : "vi"); // Ngôn ngữ mặc định là "vi"
+        String language = tokenUtil.getLanguage();
+        Locale locale = Locale.forLanguageTag(language);
         return messageSource.getMessage(keyMessage, null, locale);
     }
+
+
 }

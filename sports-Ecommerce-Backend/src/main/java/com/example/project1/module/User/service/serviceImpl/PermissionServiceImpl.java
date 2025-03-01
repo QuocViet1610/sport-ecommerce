@@ -1,15 +1,15 @@
 package com.example.project1.module.User.service.serviceImpl;
 
-import com.example.project1.mapper.PermissionMapper;
-import com.example.project1.model.dto.PermissionDto;
+import com.example.project1.mapper.User.PermissionMapper;
+import com.example.project1.model.dto.User.PermissionDto;
 import com.example.project1.model.dto.request.PermissionRequest;
-import com.example.project1.model.enity.Permission;
 import com.example.project1.module.User.repository.PermissionRepository;
 import com.example.project1.module.User.service.PermissionService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -22,18 +22,20 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public PermissionDto create(PermissionRequest request) {
-        Permission permission = permissionMapper.toEntity(request);
-        permission = permissionRepository.save(permission);
-        return permissionMapper.toDto(permission);
+//        Permission permission = permissionMapper.toEntity(request);
+//        permission = permissionRepository.save(permission);
+//        return permissionMapper.toDto(permission);
+        return null;
     }
 
     @Override
     public List<PermissionDto> getAll() {
-        return permissionMapper.toDtos(permissionRepository.findAll());
+//        return permissionMapper.toDtos(permissionRepository.findAll());
+        return null;
     }
 
     @Override
     public void delete(String permission) {
-        permissionRepository.deleteById(permission);
+//        permissionRepository.deleteById(permission);
     }
 }

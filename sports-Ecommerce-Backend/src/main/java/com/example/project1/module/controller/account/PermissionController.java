@@ -1,6 +1,6 @@
 package com.example.project1.module.controller.account;
 
-import com.example.project1.model.dto.PermissionDto;
+import com.example.project1.model.dto.User.PermissionDto;
 import com.example.project1.model.dto.ResponseResult;
 import com.example.project1.model.dto.request.PermissionRequest;
 import com.example.project1.module.User.service.PermissionService;

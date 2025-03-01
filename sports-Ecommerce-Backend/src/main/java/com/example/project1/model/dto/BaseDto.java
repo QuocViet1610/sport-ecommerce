@@ -1,9 +1,6 @@
-package com.fft.springAPI.models.dto;
-
-import jakarta.persistence.Column;
+package com.example.project1.model.dto;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
-
 import java.time.OffsetDateTime;
 
 @Data

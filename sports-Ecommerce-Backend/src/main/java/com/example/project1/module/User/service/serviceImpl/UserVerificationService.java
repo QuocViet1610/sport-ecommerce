@@ -1,4 +1,82 @@
 package com.example.project1.module.User.service.serviceImpl;
 
-public class OTPService {
+import com.example.project1.expection.ValidateException;
+import com.example.project1.local.Translator;
+import com.example.project1.mapper.User.UserVerificationMapper;
+import com.example.project1.model.dto.request.RegisterRequest;
+import com.example.project1.model.enity.User.UserVerification;
+import com.example.project1.module.User.repository.UserVerificationRepository;
+import jakarta.transaction.Transactional;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.Random;
+
+@Service
+@RequiredArgsConstructor
+@Transactional
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+public class UserVerificationService {
+    private static final int OTP_LENGTH = 6;
+    private static final int OTP_EXPIRATION_MINUTES = 5;
+    private static final int MAX_FAILED_ATTEMPTS = 3;
+    private static final int LOCK_DURATION_MINUTES = 1;
+    UserVerificationRepository verificationRepository;
+    UserVerificationMapper userVerificationMapper;
+    PasswordEncoder passwordEncoder;
+
+    public String generateOtp() {
+        return String.format("%06d", new Random().nextInt(999999));
+    }
+
+    public LocalDateTime getExpiryTime() {
+        return LocalDateTime.now().plusMinutes(OTP_EXPIRATION_MINUTES);
+    }
+
+    public void saveOtp(RegisterRequest request, String otp) {
+        LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(5);
+        UserVerification verification = verificationRepository.findByEmail(request.getEmail())
+                .orElse(new UserVerification());
+        userVerificationMapper.partialUpdate(verification,request);
+        verification.setPassword(passwordEncoder.encode(request.getPassword()));
+        verification.setExpiryTime(expiryTime);
+        verification.setOtp(otp);
+        verification.setLockTime(null);
+        verificationRepository.save(verification);
+    }
+
+    public UserVerification verifyOtp(String email, String otp) {
+        UserVerification verification = verificationRepository.findByEmail(email).orElseThrow(()-> new ValidateException(Translator.toMessage("Tài khoản gmail chua dang ky")));;
+
+
+        if (verification.isLocked()) {
+            throw new ValidateException( "Bạn đã nhập sai OTP quá nhiều lần. Vui lòng thử lại sau 10 phút.");
+        }
+
+        if (verification.getExpiryTime().isBefore(LocalDateTime.now())) {
+            throw new ValidateException("Mã OTP đã hết hạn, vui lòng yêu cầu mã mới!");
+        }
+
+        if (!verification.getOtp().equals(otp)){
+            verification.setFailedAttempts(verification.getFailedAttempts() + 1);
+            if (verification.getFailedAttempts() >= MAX_FAILED_ATTEMPTS) {
+                verification.setLockTime(LocalDateTime.now().plusMinutes(LOCK_DURATION_MINUTES));
+                verificationRepository.save(verification);
+                throw new ValidateException( "Bạn đã nhập sai OTP quá nhiều lần, tài khoản bị khóa trong 10 phút.");
+            }
+            verificationRepository.save(verification);
+            throw new ValidateException("Mã OTP không hợp lệ!");
+        }
+
+        verificationRepository.delete(verification);
+
+        return verification;
+    }
+
+
 }

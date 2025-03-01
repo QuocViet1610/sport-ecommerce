@@ -1,8 +1,15 @@
 package com.example.project1.module.User.repository;
 
-import Permission;
+import com.example.project1.model.enity.User.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface PermissionRepository extends JpaRepository<Permission,String> {
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface UserRoleRepository extends JpaRepository<UserRole,Long> {
+
+    List<UserRole> findAllByUserId(Long id);
 
 }

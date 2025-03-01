@@ -1,4 +1,4 @@
-package com.example.project1.model.enity;
+package com.example.project1.model.enity.User;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,8 +15,11 @@ import java.util.Set;
 @Entity
 public class Permission {
     @Id
-    String name;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    String description;
+    private String name;
+
+    private String description;
 
 }
