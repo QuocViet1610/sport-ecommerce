@@ -1,4 +1,5 @@
 package com.example.project1.module.controller.account;
+import com.example.project1.middleware.annotation.TrimAndValid;
 import com.example.project1.model.dto.ResponseResult;
 import com.example.project1.model.dto.User.UserDto;
 import com.example.project1.model.dto.request.AuthenticationRequest;
@@ -12,6 +13,7 @@ import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.SignedJWT;
 import jakarta.mail.MessagingException;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -43,10 +45,14 @@ public class AuthController {
 
     }
 
-
     @PostMapping("/register")
-    public ResponseResult<Boolean> register(@RequestBody RegisterRequest request) {
+    public ResponseResult<Boolean> register(@RequestBody @TrimAndValid RegisterRequest request) {
         return ResponseResult.ofSuccess(authenticationService.register(request));
+    }
+
+    @PostMapping("/send-otp")
+    public ResponseResult<Boolean> sendOtp(@RequestBody @TrimAndValid RegisterRequest request) {
+        return ResponseResult.ofSuccess(authenticationService.sendOtp(request));
     }
 
     @PostMapping("/verify-otp")

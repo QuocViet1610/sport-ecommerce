@@ -14,11 +14,9 @@ import com.example.project1.module.User.service.AuthenticationService;
 import com.example.project1.module.User.service.UserService;
 import com.example.project1.utils.TokenUtil;
 import com.nimbusds.jose.JOSEException;
-import jakarta.mail.MessagingException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -76,10 +74,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new ValidateException(Translator.toMessage("error.user.password.mismatch"));
         }
 
+//        String otp = userVerificationService.generateOtp();
+//        emailService.sendVerificationEmail(request.getEmail(), otp);
+//        userVerificationService.saveOtp(request, otp);
+
+        return true;
+    }
+
+    public Boolean sendOtp(RegisterRequest request) {
         String otp = userVerificationService.generateOtp();
         emailService.sendVerificationEmail(request.getEmail(), otp);
         userVerificationService.saveOtp(request, otp);
-
         return true;
     }
 

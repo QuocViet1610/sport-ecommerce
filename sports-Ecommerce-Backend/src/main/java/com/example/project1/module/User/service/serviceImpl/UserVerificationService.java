@@ -55,23 +55,26 @@ public class UserVerificationService {
 
 
         if (verification.isLocked()) {
-            throw new ValidateException( "Bạn đã nhập sai OTP quá nhiều lần. Vui lòng thử lại sau 10 phút.");
+            throw new ValidateException(Translator.toMessage("error.otp.too_many_attempts"));
         }
 
         if (verification.getExpiryTime().isBefore(LocalDateTime.now())) {
-            throw new ValidateException("Mã OTP đã hết hạn, vui lòng yêu cầu mã mới!");
+            throw new ValidateException(Translator.toMessage("error.otp.expired"));
         }
 
-        if (!verification.getOtp().equals(otp)){
+        if (!verification.getOtp().equals(otp)) {
             verification.setFailedAttempts(verification.getFailedAttempts() + 1);
+
             if (verification.getFailedAttempts() >= MAX_FAILED_ATTEMPTS) {
                 verification.setLockTime(LocalDateTime.now().plusMinutes(LOCK_DURATION_MINUTES));
                 verificationRepository.save(verification);
-                throw new ValidateException( "Bạn đã nhập sai OTP quá nhiều lần, tài khoản bị khóa trong 10 phút.");
+                throw new ValidateException(Translator.toMessage("error.otp.locked"));
             }
+
             verificationRepository.save(verification);
-            throw new ValidateException("Mã OTP không hợp lệ!");
+            throw new ValidateException(Translator.toMessage("error.otp.invalid"));
         }
+
 
         verificationRepository.delete(verification);
 

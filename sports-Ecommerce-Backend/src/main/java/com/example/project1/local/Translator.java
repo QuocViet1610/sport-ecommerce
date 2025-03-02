@@ -2,6 +2,7 @@ package com.example.project1.local;
 
 import com.example.project1.utils.TokenUtil;
 import org.springframework.context.MessageSource;
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 import java.util.Locale;
@@ -29,8 +30,11 @@ public class Translator {
         // Lấy ngôn ngữ từ TokenUtil thông qua phương thức tĩnh
         String language = tokenUtil.getLanguage();
         Locale locale = Locale.forLanguageTag(language);
-        return messageSource.getMessage(keyMessage, null, locale);
+        try {
+            return messageSource.getMessage(keyMessage, null, locale);
+        } catch (NoSuchMessageException e) {
+            return keyMessage;
+        }
     }
-
 
 }

@@ -89,7 +89,7 @@ public class UserServiceImp implements UserService {
     @Override
     public UserDto register(UserVerification request) {
         User userRequest = userMapper.toCreate(request);
-        userRequest.setPassword(passwordEncoder.encode(request.getPassword()));
+//        userRequest.setPassword(passwordEncoder.encode(request.getPassword()));
         User user= userRepository.save(userRequest);
         UserRole userRole = new UserRole();
         userRole.setRoleId(RoleEnum.USER.getId());
