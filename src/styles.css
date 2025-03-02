@@ -1,1 +1,146 @@
 /* You can add global styles to this file, and also import other style files */
+@import '@fontsource/roboto/index.css';
+
+
+*{
+  box-sizing : inherit;
+}
+
+/* body  {
+  font-size: 10.5%;
+  line-height: 1.6rem;
+  /* font-family: 'Roboto Mono', monospace; */
+  /* font-family: 'Roboto', sans-serif; */
+  /* background : red; */
+  /* font-family: 'Roboto', 'Open Sans', 'Montserrat', sans-serif; */
+/* }  */
+
+html{
+  font-family: 'Roboto', sans-serif;
+  font-size: 62.5%;
+  line-height: 1.6rem;
+  box-sizing: border-box;
+}
+
+.grid {
+    width: 1200px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.grid_row{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+:root {
+  --primary-bg: #28A745;
+  --secondary-bg: #000000;
+  --tertiary-bg: #F5F5F5;
+  --card-bg: #E9F5E9;
+  --primary-text: #FFFFFF;
+  --secondary-text: #CCCCCC;
+  --tertiary-text: #4D4D4D;
+  --primary-btn: #218838;
+  --secondary-btn: #FFFFFF;
+  --hover-btn: #1E7E34;
+  --disabled-btn: #BDBDBD;
+  --border: #DDDDDD;
+  --link-text: #28A745;
+  --link-hover-text: #1E7E34;
+  --error: #DC3545;
+  --success: #28A745;
+  --brand-color: #1B5E20;
+  --teal: #00897B;
+  --rose: #D81B60;
+  --purple: #6A1B9A;
+  --amber: #FFC107;
+  --box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 12px;
+}
+
+body {
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+}
+
+button {
+  background-color: var(--primary-btn);
+  color: var(--secondary-btn);
+  border: 1px solid var(--border);
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--hover-btn);
+  }
+}
+
+.error {
+  color: var(--error);
+}
+
+.success {
+  color: var(--success);
+}
+
+.card {
+  background-color: var(--secondary-bg);
+  color: var(--primary-text);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--primary-text);
+  margin-bottom: 16px;
+}
+
+/* Tiêu đề phụ */
+h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--primary-text);
+  margin-bottom: 14px;
+}
+
+h3 {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: var(--primary-text);
+  margin-bottom: 12px;
+}
+
+h4 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary-text);
+  margin-bottom: 10px;
+}
+
+h5 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--secondary-text);
+  margin-bottom: 8px;
+}
+
+/* Đoạn văn bản */
+p {
+  font-size: 1rem;
+  font-weight: normal;
+  color: var(--secondary-text);
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+/* Nhãn input */
+label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--tertiary-text);
+  display: block;
+  margin-bottom: 6px;
+}

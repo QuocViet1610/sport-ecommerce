@@ -1,0 +1,95 @@
+<div class="container" *ngIf="isRegistering">
+  <div class="register-container">
+    <h3 class="text-center">Đăng ký</h3>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <!-- Họ và Tên -->
+      <div class="mb-3">
+        <label for="fullName" class="form-label">Họ và Tên</label>
+        <input type="text" class="form-control" id="fullName" formControlName="fullName">
+        <small class="text-danger" *ngIf="registerForm.get('fullName')?.invalid && registerForm.get('fullName')?.touched">
+          <span *ngIf="registerForm.get('fullName')?.errors?.['required']">Tên không được để trống.</span>
+          <span *ngIf="registerForm.get('fullName')?.errors?.['minlength']">Tên phải có ít nhất 3 ký tự.</span>
+        </small>
+      </div>
+
+      <!-- Email -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" formControlName="email">
+        <div class="invalid-feedback d-block" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+          Vui lòng nhập email hợp lệ.
+        </div>
+      </div>
+
+      <!-- Số điện thoại -->
+      <div class="mb-3">
+        <label for="phone" class="form-label">Số điện thoại</label>
+        <input type="tel" class="form-control" id="phone" formControlName="phone">
+        <div class="invalid-feedback d-block" *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched">
+          Số điện thoại phải có 10 chữ số.
+        </div>
+      </div>
+
+      <!-- Mật khẩu -->
+      <div class="mb-3 position-relative">
+        <label for="password" class="form-label">Mật khẩu</label>
+        <div class="input-group">
+          <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="password" formControlName="password">
+          <span class="input-group-text password-toggle" (click)="togglePassword()">
+            <i class="fas" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+          </span>
+        </div>
+        <div class="invalid-feedback d-block" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+          Mật khẩu ít nhất 8 ký tự.
+        </div>
+      </div>
+
+      <!-- Nhập lại mật khẩu -->
+      <div class="mb-3 position-relative">
+        <label for="confirmPassword" class="form-label">Nhập lại mật khẩu</label>
+        <div class="input-group">
+          <input [type]="showConfirmPassword ? 'text' : 'password'" class="form-control" id="confirmPassword" formControlName="confirmPassword">
+          <span class="input-group-text password-toggle" (click)="toggleConfirmPassword()">
+            <i class="fas" [ngClass]="showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+          </span>
+        </div>
+        <div class="invalid-feedback d-block" *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched">
+          Mật khẩu không khớp.
+        </div>
+      </div>
+
+      <button type="submit" class="btn primary-btn w-100" >Đăng ký</button>
+    </form>
+
+    <p class="text-center mt-3">Bạn đã có tài khoản? <a [routerLink]="'/login'"  style="color: var(--link-text);">Đăng nhập ngay!</a></p>
+  </div>
+</div>
+
+<div class="otp-container" *ngIf="isVerifying">
+  <label for="otp">Mã OTP</label>
+  <div class="otp-box">
+    <input *ngFor="let control of otpControls.controls; let i = index"
+           type="text"
+           maxlength="1"
+           inputmode="numeric"
+           pattern="[0-9]*"
+           class="otp-input"
+           [formControl]="control"
+           (input)="moveNext($event, i)"
+           (keydown)="handleBackspace($event, i)"
+           (paste)="handlePaste($event)">
+  </div>
+  <div *ngIf="otpControlsInvalid" class="error-message">
+    Mã OTP không hợp lệ. Vui lòng kiểm tra lại.
+  </div>
+
+  <!-- Nút xác nhận -->
+  <button (click)="confirmOtp()" [disabled]="!isOtpValid()" class="otp-button">
+    Xác nhận mã
+  </button>
+
+  <!-- Nút gửi lại mã -->
+  <button (click)="resendOtp()" [disabled]="isResendDisabled" class="resend-button">
+    Gửi lại mã ({{ countdown }}s)
+  </button>
+</div>

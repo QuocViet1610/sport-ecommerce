@@ -1,0 +1,30 @@
+
+  .navbar {
+      background-color: #03172e; /* Màu xanh đậm */
+  }
+  .navbar-brand img {
+      height: 40px;
+  }
+  .nav-link {
+      color: white !important;
+      font-weight: bold;
+  }
+  .nav-link:hover {
+      color: #50c878 !important; /* Xanh lá nhạt */
+  }
+  .search-box {
+      background-color: #2c3e50;
+      border: none;
+      color: white;
+  }
+  .search-box::placeholder {
+      color: #bbb;
+  }
+  .icon-btn {
+      color: white;
+      font-size: 20px;
+      margin-left: 10px;
+  }
+
+
+

@@ -1,0 +1,77 @@
+/* :root {
+  --primary-bg: #28A745;
+  --secondary-bg: #000000;
+  --tertiary-bg: #F5F5F5;
+  --card-bg: #E9F5E9;
+  --primary-text: #FFFFFF;
+  --secondary-text: #CCCCCC;
+  --tertiary-text: #4D4D4D;
+  --primary-btn: #218838;
+  --secondary-btn: #FFFFFF;
+  --hover-btn: #1E7E34;
+  --disabled-btn: #BDBDBD;
+  --border: #DDDDDD;
+  --link-text: #28A745;
+  --link-hover-text: #1E7E34;
+  --box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 12px;
+} */
+
+body {
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  box-shadow: var(--box-shadow);
+}
+
+.primary-btn {
+  background-color: var(--primary-btn);
+  color: var(--secondary-btn);
+}
+
+.primary-btn:hover {
+  background-color: var(--hover-btn);
+}
+
+.secondary-btn {
+  background-color: var(--secondary-btn);
+  color: var(--primary-text);
+  border: 1px solid var(--border);
+}
+
+.disabled {
+  background-color: var(--disabled-btn);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.card {
+  background-color: var(--card-bg);
+  padding: 20px;
+  margin: 20px auto;
+  width: 300px;
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+}
+
+a {
+  color: var(--link-text);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--link-hover-text);
+}
+
+.theme-selector {
+  margin-top: 20px;
+}
