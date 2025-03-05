@@ -16,4 +16,16 @@ public class Constants {
         String ALPHANUMERIC_SPACE_UNDERSCORE="^[\\p{L}0-9\\s_]+$";
         String TIME_PATTERN = "^([01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d$";
     }
+
+    public static final class ERROR_CODE {
+        public static final String SUCCESS = "200";
+        public static final String INVALID = "400";
+        public static final String NOT_FOUND = "404";
+        public static final String NOT_ALLOWED = "405";
+        public static final String UNSUPPORTED_MEDIA_TYPE = "415";
+        public static final String PHONE_IS_NOT_EXIST = "402";
+        public static final String UNAUTHORIZED = "401";
+        public static final String SYSTEM_ERROR = "500";
+
+    }
 }

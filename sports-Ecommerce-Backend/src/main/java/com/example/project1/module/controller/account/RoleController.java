@@ -32,9 +32,9 @@ public class RoleController {
         return ResponseResult.ofSuccess(roleService.getAll());
     }
 
-    @DeleteMapping("/{role}")
-    ResponseResult<String> delete(@PathVariable String role) {
-        roleService.delete(role);
-        return ResponseResult.ofSuccess();
-    }
+//    @DeleteMapping("/{role}")
+//    ResponseResult<String> delete(@PathVariable String role) {
+//        roleService.delete(role);
+//        return ResponseResult.ofSuccess();
+//    }
 }

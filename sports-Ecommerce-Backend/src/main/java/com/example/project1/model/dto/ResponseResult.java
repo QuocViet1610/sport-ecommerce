@@ -1,6 +1,7 @@
 package com.example.project1.model.dto;
 
 import com.example.project1.local.Translator;
+import com.example.project1.utils.Constants;
 import com.example.project1.utils.DateUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
@@ -29,15 +30,15 @@ public class ResponseResult<T> {
         return ResponseResult;
     }
 
-    public static ResponseResult<String> ofSuccess() {
-        ResponseResult<String> ResponseResult = new ResponseResult<>();
-        ResponseResult.setCode("200");
+    public static <T> ResponseResult<T> ofSuccess() {
+        ResponseResult<T> ResponseResult = new ResponseResult<>();
+        ResponseResult.setErrorCode(Constants.ERROR_CODE.SUCCESS);
         ResponseResult.setMessage(Translator.toMessage("common.success"));
-        Date date = new Date();
-        ResponseResult.setDatetime(date.toString());
-        ResponseResult.setData("sucess");
+        ResponseResult.setDatetime(DateUtils.timeServerNow());
         return ResponseResult;
     }
+
+
 
     public static <T> ResponseResult<T> errorServer(String message) {
         ResponseResult<T> ResponseResult = new ResponseResult<>();

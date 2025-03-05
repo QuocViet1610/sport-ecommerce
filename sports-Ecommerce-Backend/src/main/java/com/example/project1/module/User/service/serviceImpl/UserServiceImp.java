@@ -99,6 +99,7 @@ public class UserServiceImp implements UserService {
         return userMapper.toDto(userRequest);
     }
 
+    @Override
     public UserDto getMyInfo() {
         var context = SecurityContextHolder.getContext();
         String name = context.getAuthentication().getName();

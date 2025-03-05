@@ -28,9 +28,9 @@ public class PermissionController {
         return ResponseResult.ofSuccess(permissionService.getAll());
     }
 
-    @DeleteMapping("/{permission}")
-    ResponseResult<String> delete(@PathVariable String permission) {
-        permissionService.delete(permission);
-        return ResponseResult.ofSuccess();
-    }
+//    @DeleteMapping("/{permission}")
+//    ResponseResult<String> delete(@PathVariable String permission) {
+//        permissionService.delete(permission);
+//        return ResponseResult.ofSuccess();
+//    }
 }
