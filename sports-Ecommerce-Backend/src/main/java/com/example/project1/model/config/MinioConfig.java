@@ -38,4 +38,10 @@ public class MinioConfig {
 
     @Value("${app.image.keyName.brand}")
     private String minioBrandKeyName;
+
+    @Value("${app.image.folder.product}")
+    private String minioProductFolder;
+
+    @Value("${app.image.keyName.product}")
+    private String minioProductKeyName;
 }

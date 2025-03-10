@@ -172,4 +172,32 @@ public class DataUtils {
     public static boolean isNull(Object obj) {
         return obj == null;
     }
+
+
+    public static String createCodeByKey(String key) {
+        String idPart = String.format("%06d", new Random().nextInt(1000000));
+        key = getCode(key);
+        String transactionCode = key + idPart;
+
+        return transactionCode;
+    }
+
+    public static String createCode() {
+        String code = String.format("%06d", new Random().nextInt(1000000));
+        return code;
+    }
+    public static String getCode(String name) {
+        String[] words = name.split("\\s+");
+        StringBuilder initials = new StringBuilder();
+
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                initials.append(word.charAt(0));
+            }
+            if (initials.length() == 2) break;
+        }
+
+        return initials.toString().toUpperCase();
+    }
+
 }

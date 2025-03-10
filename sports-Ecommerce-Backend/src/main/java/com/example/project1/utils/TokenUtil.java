@@ -1,7 +1,6 @@
 package com.example.project1.utils;
 
 import com.example.project1.model.Enum.LanguageEnum;
-import com.example.project1.model.dto.request.IntrospectionRequest;
 import com.example.project1.model.enity.User.User;
 import com.example.project1.model.enity.User.UserRole;
 import com.example.project1.module.User.repository.UserRepository;
@@ -18,10 +17,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -157,6 +157,17 @@ public class TokenUtil {
         return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
     }
 
+    public static String getCurrentUsername() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            return ((UserDetails) principal).getUsername();
+        } else if (principal instanceof Jwt) {
+            return ((Jwt) principal).getClaim("sub"); // Hoặc "preferred_username" tùy vào JWT cấu hình
+        } else {
+            return principal.toString();
+        }
+    }
 
 
 }

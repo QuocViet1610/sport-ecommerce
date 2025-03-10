@@ -47,6 +47,8 @@ app:
         folder:
             category: "D:\\Downloads\\image\\category\\"
             brand: "D:\\Downloads\\image\\brand\\"
+            product: "D:\\Downloads\\image\\product\\"
         keyName:
             category: "category/"
             brand: "brand/"
+            product: "product/"
