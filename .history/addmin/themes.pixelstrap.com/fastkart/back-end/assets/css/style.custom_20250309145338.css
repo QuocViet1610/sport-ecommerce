@@ -1,0 +1,20 @@
+.sidebar-wrapper{
+    background:rgba(0, 161, 54, 0.87) !important;
+}
+
+.btn-solid{
+    background:rgba(0, 161, 54, 0.87) !important;
+}
+
+.sidebar-wrapper{
+    height: 100% !important;
+}
+
+.page-header{
+    background:white !important;
+}
+
+.page-body-wrapper{
+    margin: 20px; /* Khoảng trống thật */
+    outline: 20px solid blue; /* Màu "margin" */
+}

@@ -1,0 +1,42 @@
+.sidebar-wrapper{
+    background:rgba(0, 161, 54, 0.87) !important;
+}
+
+/* Giảm khoảng cách giữa các cột */
+.table th, .table td {
+    padding: 8px 12px; /* Giảm padding để thu hẹp khoảng cách */
+    text-align: center; /* Căn giữa nội dung */
+    vertical-align: middle; /* Canh giữa theo chiều dọc */
+}
+
+/* Giữ nguyên kích thước ảnh nhỏ gọn */
+.table-image img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+/* Điều chỉnh cột thao tác */
+.table ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+}
+
+.table ul li {
+    display: inline-block;
+}
+
+/* Điều chỉnh icon trong cột thao tác */
+.table ul li a i {
+    font-size: 18px;
+    color: #333;
+    transition: color 0.3s;
+}
+
+.table ul li a i:hover {
+    color: #007bff;
+}

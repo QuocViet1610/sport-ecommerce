@@ -1,0 +1,22 @@
+.sidebar-wrapper{
+    background:rgba(0, 161, 54, 0.87) !important;
+}
+
+.btn-solid{
+    background:rgba(0, 161, 54, 0.87) !important;
+}
+
+.sidebar-wrapper{
+    height: 100% !important;
+}
+
+.page-header{
+    background:white !important;
+}
+
+.page-body {
+    background-color: lightgray; /* Màu nền của trang */
+    width: 80%; /* Độ rộng tùy chỉnh */
+    margin: 40px auto; /* Tạo khoảng cách margin */
+    box-shadow: 0 0 0 40px white; /* Tạo hiệu ứng margin trắng */
+}

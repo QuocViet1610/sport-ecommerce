@@ -1,0 +1,7 @@
+.sidebar-wrapper {
+    display: block; /* Hoặc display: flex; nếu cần */
+}
+
+.hidden {
+    display: none;
+}

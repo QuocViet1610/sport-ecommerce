@@ -1,0 +1,178 @@
+:root {
+  --primary-color: rgba(0, 161, 54, 0.87); /* Màu chủ đạo */
+  --primary-hover: rgba(0, 130, 40, 0.87); /* Màu hover (đậm hơn một chút) */
+  --text-color: #ffffff; /* Màu chữ trắng */
+}
+
+.login-container {
+  height: 100vh;
+  display: flex;
+}
+
+/* Bố cục 2 phần của trang đăng nhập */
+.left-side {
+  flex: 3;
+  background-color: #1A2236;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.right-side {
+
+  background-color: white;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Logo */
+.logo-container {
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 120px;
+  height: auto;
+}
+
+/* Tiêu đề chào mừng */
+.welcome-text {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+/* Form đăng nhập */
+.login-form {
+  max-width: 400px;
+  width: 100%;
+}
+
+.login-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.form-label {
+  font-weight: 500;
+  color: #555; /* Thay var(--tertiary-text) bằng màu xám đậm */
+}
+
+/* Ô nhập liệu */
+.form-control {
+  border: 1px solid #ccc; /* Thay var(--border) bằng màu xám */
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hiệu ứng khi nhập vào */
+.form-control:focus {
+  border-color: rgba(0, 161, 54, 0.87); /* Thay var(--link-text) bằng màu xanh */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+/* Tùy chỉnh placeholder */
+.form-control::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+/* Ô nhập mật khẩu */
+.password-field {
+  position: relative;
+}
+
+/* Icon hiện/ẩn mật khẩu */
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+  font-size: 18px;
+}
+
+.password-toggle:hover {
+  color: #333;
+}
+
+/* Nút đăng nhập */
+.login-btn {
+  background-color: rgba(0, 161, 54, 0.87); /* Thay var(--primary-btn) bằng màu xanh */
+  color: white; /* Thay var(--secondary-btn) bằng màu trắng */
+  border: none;
+  border-radius: 5px;
+  padding: 12px;
+  font-weight: 600;
+  width: 100%;
+  margin-top: 20px;
+  transition: background 0.3s ease-in-out;
+}
+
+.login-btn:hover {
+  background-color: rgba(0, 130, 40, 0.87); /* Thay var(--hover-btn) bằng màu xanh đậm */
+}
+
+/* Liên kết Quên mật khẩu */
+.forgot-password {
+  color:rgba(0, 130, 40, 0.87); /* Thay var(--link-text) bằng màu xanh */
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-top: 10px;
+  text-align: right;
+  display: block;
+}
+
+.forgot-password:hover {
+  color:rgba(0, 130, 40, 0.87); /* Thay var(--link-hover-text) bằng màu xanh đậm */
+}
+
+/* Hiệu ứng nền */
+.dots-pattern {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  height: 120px;
+  opacity: 0.5;
+}
+
+.background-circle {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+  z-index: 0;
+}
+
+.circle-1 {
+  top: -200px;
+  left: -100px;
+}
+
+.circle-2 {
+  bottom: -200px;
+  right: -100px;
+}
+
+/* Tùy chỉnh checkbox */
+.form-check-input {
+  border-color: #0d6efd;
+}
+
+.form-check-input:checked {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}

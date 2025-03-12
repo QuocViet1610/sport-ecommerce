@@ -1,0 +1,19 @@
+.sidebar-wrapper{
+    background:rgba(0, 161, 54, 0.87) !important;
+}
+
+.btn-solid{
+    background:rgba(0, 161, 54, 0.87) !important;
+}
+
+.sidebar-wrapper{
+    height: 100% !important;
+}
+
+.page-header{
+    background:white !important;
+}
+
+.page-body{
+    margin: 0px !important; /* Màu "margin" */
+}

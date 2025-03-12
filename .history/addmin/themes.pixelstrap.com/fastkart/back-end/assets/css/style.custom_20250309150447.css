@@ -1,0 +1,23 @@
+.sidebar-wrapper{
+    background:rgba(0, 161, 54, 0.87) !important;
+}
+
+.btn-solid{
+    background:rgba(0, 161, 54, 0.87) !important;
+}
+
+.sidebar-wrapper{
+    height: 100% !important;
+}
+
+.page-header{
+    background:white !important;
+}
+
+.page-body{
+    outline: 40px solid #F9F9F6 !important; 
+}
+
+.page-header {
+    box-shadow: -40px 0 0 0 white !important; /* Chỉ tạo hiệu ứng trắng bên trái */
+}

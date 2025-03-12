@@ -1,0 +1,33 @@
+
+        /* Nút Toggle Sidebar */
+        .toggle-sidebar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: #2c3e50; /* Màu nền */
+            border-radius: 5px; /* Bo góc */
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Hover Effect */
+        .toggle-sidebar:hover {
+            background: #34495e; /* Đổi màu khi hover */
+        }
+
+        /* Icon 3 gạch */
+        .toggle-sidebar i {
+            font-size: 24px;
+            color: #ffffff;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Khi sidebar mở, xoay icon */
+        .sidebar-open .toggle-sidebar i {
+            transform: rotate(90deg);
+        }
+
+
