@@ -1,0 +1,51 @@
+.image-preview-container {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 10px !important;
+    margin-top: 10px !important;
+    overflow-x: auto !important;
+    padding-bottom: 5px !important;
+}
+
+.image-preview {
+    width: 100px !important;
+    height: 100px !important;
+    border: 2px dashed #ccc !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    position: relative !important;
+    background-color: #f8f9fa !important;
+    flex-shrink: 0 !important;
+    cursor: pointer !important;
+}
+
+.image-preview img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: none !important;
+}
+
+.image-preview span {
+    font-size: 24px !important;
+    color: #999 !important;
+}
+
+.image-preview .remove-btn {
+    position: absolute !important;
+    top: 5px !important;
+    right: 5px !important;
+    background: red !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 50% !important;
+    width: 20px !important;
+    height: 20px !important;
+    font-size: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+}

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thêm thể loại mới</title>
+  <!-- Liên kết Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    /* Định dạng cho dropdown trong modal */
+    .dropdown-container {
+      position: relative;
+    }
+    .dropdown-button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      text-align: left;
+      background-color: #F9F9F6;
+      color: #333;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      text-align: left;
+    }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      background-color: #ffffff;
+      width: 100%;
+      max-height: 200px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      z-index: 1;
+    }
+    .dropdown-menu a {
+      padding: 12px;
+      color: #333;
+      text-decoration: none;
+      display: block;
+    }
+    .dropdown-menu a:hover {
+      background-color: #4CAF50;
+      color: white;
+    }
+    .dropdown-menu a.selected {
+      background-color: #4CAF50;
+      color: white;
+    }
+    .dropdown-menu .search-input {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body style="background-color: #f8f9fa;">
+
+  <!-- Modal -->
+  <div class="modal fade" id="attributeModal" tabindex="-1" aria-labelledby="attributeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="attributeModalLabel">Thêm thể loại mới</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Thêm Form Nhập Liệu -->
+          <div class="mb-3">
+            <label for="categoryName" class="form-label">Tên thể loại</label>
+            <input type="text" class="form-control" id="categoryName" placeholder="Nhập tên thể loại" required style="font-size: 16px; height: 40px;">
+          </div>
+          <div class="mb-3">
+            <label for="parentCategory" class="form-label">Thể loại cha</label>
+            <div class="dropdown-container">
+              <button class="dropdown-button" id="dropdownButton" onclick="toggleDropdown()">
+                Chọn thể loại
+              </button>
+              <div class="dropdown-menu" id="dropdownMenu">
+                <input type="text" class="search-input" id="searchInput" placeholder="Tìm kiếm..." onkeyup="filterFunction()">
+                <a href="#" class="dropdown-item" onclick="selectItem('Bóng Đá')">Bóng Đá</a>
+                <a href="#" class="dropdown-item" onclick="selectItem('Giày Đá Banh')">Giày Đá Banh</a>
+                <a href="#" class="dropdown-item" onclick="selectItem('Giày Lười')">Giày Lười</a>
+                <a href="#" class="dropdown-item" onclick="selectItem('Giày')">Giày</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          <button type="button" class="btn btn-primary" id="saveCategory">Lưu</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Thêm thư viện Bootstrap và Popper.js cho modal và dropdown hoạt động -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"></script>
+
+  <script>
+    // Toggle dropdown visibility
+    function toggleDropdown() {
+      const dropdownMenu = document.getElementById('dropdownMenu');
+      dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // Lọc các mục trong dropdown khi người dùng nhập vào thanh tìm kiếm
+    function filterFunction() {
+      const input = document.getElementById('searchInput');
+      const filter = input.value.toUpperCase();
+      const items = document.getElementsByClassName('dropdown-item');
+      
+      for (let i = 0; i < items.length; i++) {
+        const txtValue = items[i].textContent || items[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          items[i].style.display = "";
+        } else {
+          items[i].style.display = "none";
+        }
+      }
+    }
+
+    // Chọn một mục và hiển thị tên mục đó trên nút dropdown
+    function selectItem(itemText) {
+      document.getElementById('dropdownButton').textContent = itemText; // Cập nhật tên nút
+      const dropdownMenu = document.getElementById('dropdownMenu');
+      dropdownMenu.style.display = 'none'; // Ẩn dropdown sau khi chọn
+    }
+
+    // Đóng dropdown nếu click bên ngoài
+    document.addEventListener('click', function(event) {
+      const dropdownMenu = document.getElementById('dropdownMenu');
+      const dropdownButton = document.getElementById('dropdownButton');
+      if (!dropdownMenu.contains(event.target) && !dropdownButton.contains(event.target)) {
+        dropdownMenu.style.display = 'none';
+      }
+    });
+  </script>
+
+</body>
+</html>

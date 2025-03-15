@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search/Filter Dropdown</title>
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .dropdown-container {
+      width: 300px;
+      margin: 0 auto;
+      background-color: #fff;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .dropdown-button {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      text-align: left;
+      background-color: #e2e2d9;
+      color: #333;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .dropdown-button:hover {
+      background-color: #d1d1c6;
+    }
+
+    .dropdown-menu {
+      display: none;
+      max-height: 250px;
+      overflow-y: auto;
+      border-radius: 8px;
+      border: none;
+      padding: 0;
+      margin: 0;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      position: absolute;
+      width: 100%;
+      top: 55px;
+    }
+
+    .dropdown-item {
+      padding: 12px 16px;
+      font-size: 14px;
+      color: #333;
+      text-decoration: none;
+      display: block;
+      cursor: pointer;
+    }
+
+    .dropdown-item:hover, .dropdown-item:focus {
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 4px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 10px 15px;
+      margin-bottom: 5px;
+      font-size: 14px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #4CAF50;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dropdown-container">
+    <button class="dropdown-button" id="dropdownButton" onclick="toggleDropdown()">
+      Chọn thể loại
+    </button>
+    <div class="dropdown-menu" id="dropdownMenu">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search..." onkeyup="filterFunction()">
+      <a href="#" class="dropdown-item" onclick="selectItem('Bóng Đá')">Bóng Đá</a>
+      <a href="#" class="dropdown-item" onclick="selectItem('Giày Đá Banh')">Giày Đá Banh</a>
+      <a href="#" class="dropdown-item" onclick="selectItem('Giày lười')">Giày lười</a>
+      <a href="#" class="dropdown-item" onclick="selectItem('Giày')">Giày</a>
+    </div>
+  </div>
+
+  <script>
+    function toggleDropdown() {
+      const dropdownMenu = document.getElementById('dropdownMenu');
+      dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function selectItem(itemText) {
+      document.getElementById("dropdownButton").textContent = itemText; // Cập nhật tên nút
+      document.getElementById('dropdownMenu').style.display = 'none'; // Ẩn dropdown sau khi chọn
+    }
+
+    function filterFunction() {
+      const input = document.getElementById("searchInput");
+      const filter = input.value.toUpperCase();
+      const dropdownItems = document.getElementsByClassName("dropdown-item");
+
+      for (let i = 0; i < dropdownItems.length; i++) {
+        const txtValue = dropdownItems[i].textContent || dropdownItems[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          dropdownItems[i].style.display = "";
+        } else {
+          dropdownItems[i].style.display = "none";
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>
