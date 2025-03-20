@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toggle Selected Example</title>
+    <style>
+        .option-item {
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin: 5px;
+            display: inline-block;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .selected {
+            background-color: lightgreen;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Chọn giá trị</h2>
+    <div class="option-item" onclick="toggleSelection(this)">Giá trị A</div>
+    <div class="option-item" onclick="toggleSelection(this)">Giá trị B</div>
+    <div class="option-item" onclick="toggleSelection(this)">Giá trị C</div>
+    <div class="option-item" onclick="toggleSelection(this)">Giá trị D</div>
+
+    <h3>Giá trị đã chọn:</h3>
+    <p id="selectedValues">Không có giá trị nào</p>
+
+    <script>
+        function toggleSelection(element) {
+            // Toggle class "selected" (bật/tắt trạng thái chọn)
+            element.classList.toggle("selected");
+
+            // Cập nhật danh sách giá trị đã chọn
+            updateSelectedValues();
+        }
+
+        function updateSelectedValues() {
+            // Lấy tất cả phần tử đang có class "selected"
+            let selectedElements = document.querySelectorAll(".option-item.selected");
+
+            // Tạo danh sách giá trị đã chọn
+            let selectedTexts = Array.from(selectedElements).map(el => el.textContent);
+
+            // Hiển thị giá trị đã chọn
+            document.getElementById("selectedValues").textContent = selectedTexts.length > 0 
+                ? selectedTexts.join(", ") 
+                : "Không có giá trị nào";
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Thuộc Tính</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .attribute-group {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .value-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            margin-top: 5px;
+            background-color: white;
+            border-radius: 4px;
+        }
+        .removeValue {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body >
+
+    <h2 class="text-center">Quản lý Thuộc Tính</h2>
+
+    <button id="addAttribute" class="btn btn-primary mb-3">Thêm Thuộc Tính</button>
+
+    <div id="attributeContainer">
+        <!-- Nhóm thuộc tính sẽ hiển thị tại đây -->
+    </div>
+
+    <button id="logData" class="btn btn-info mt-3">Xem Dữ Liệu</button>
+
+    <!-- Modal Chọn Giá Trị -->
+    <div class="modal fade" id="valueModal" tabindex="-1" aria-labelledby="valueModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="valueModalLabel">Chọn Giá Trị</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group" id="valueListModal">
+                        <!-- Giá trị của thuộc tính sẽ hiển thị ở đây -->
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            let attributes = []; 
+            let selectedAttributeId = null;
+
+            // Danh sách thuộc tính và giá trị của chúng
+            const availableAttributes = [
+                { id: 1, name: "Màu sắc", values: [{ id: 101, name: "Đỏ" }, { id: 102, name: "Xanh" }, { id: 103, name: "Vàng" }] },
+                { id: 2, name: "Kích thước", values: [{ id: 201, name: "S" }, { id: 202, name: "M" }, { id: 203, name: "L" }] },
+                { id: 3, name: "Chất liệu", values: [{ id: 301, name: "Cotton" }, { id: 302, name: "Polyester" }, { id: 303, name: "Lụa" }] }
+            ];
+
+            // Thêm một nhóm thuộc tính mới
+            $('#addAttribute').on('click', function() {
+                let attributeId = Date.now();
+                let attributeGroup = `
+                    <div class="attribute-group" data-attribute-id="${attributeId}">
+                        <select class="form-select attribute-select">
+                            <option value="">Chọn thuộc tính</option>
+                            ${availableAttributes.map(attr => `<option value="${attr.id}">${attr.name}</option>`).join('')}
+                        </select>
+                        <button class="btn btn-success mt-2 addValue" data-attribute-id="${attributeId}">Thêm Giá Trị</button>
+                        <div class="value-list mt-2" id="valueList-${attributeId}"></div>
+                    </div>
+                `;
+
+                $('#attributeContainer').append(attributeGroup);
+                attributes.push({ id: attributeId, attributeType: null, values: [] });
+            });
+
+            // Khi thay đổi thuộc tính, cập nhật dữ liệu
+            $(document).on('change', '.attribute-select', function() {
+                let attributeId = $(this).closest('.attribute-group').data('attribute-id');
+                let selectedAttribute = $(this).val();
+                let attribute = attributes.find(attr => attr.id === attributeId);
+                if (attribute) {
+                    attribute.attributeType = selectedAttribute;
+                    attribute.values = [];
+                    renderAttributes();
+                }
+            });
+
+            // Hiển thị Modal Chọn Giá Trị dựa trên thuộc tính
+            $(document).on('click', '.addValue', function() {
+                selectedAttributeId = $(this).data('attribute-id');
+                let attribute = attributes.find(attr => attr.id === selectedAttributeId);
+                if (!attribute || !attribute.attributeType) {
+                    alert("Vui lòng chọn thuộc tính trước!");
+                    return;
+                }
+
+                let selectedAttribute = availableAttributes.find(attr => attr.id == attribute.attributeType);
+                let selectedValues = attribute.values.map(value => value.id);
+
+                let valueListHtml = selectedAttribute.values.map(value => {
+                    let isSelected = selectedValues.includes(value.id) ? 'selected' : ''; 
+                    let buttonClass = selectedValues.includes(value.id) ? 'btn-secondary' : 'btn-primary';
+                    return `
+                        <li class="list-group-item d-flex justify-content-between align-items-center ${isSelected}">
+                            ${value.name}
+                            <button class="btn ${buttonClass} selectValue" data-value-id="${value.id}" data-value-name="${value.name}">
+                                ${isSelected ? "Đã chọn" : "Chọn"}
+                            </button>
+                        </li>
+                    `;
+                }).join('');
+
+                $('#valueListModal').html(valueListHtml);
+                $('#valueModal').modal('show');
+            });
+
+            // Khi chọn giá trị từ modal
+            $(document).on('click', '.selectValue', function() {
+                let valueId = $(this).data('value-id');
+                let valueName = $(this).data('value-name');
+
+                let attribute = attributes.find(attr => attr.id === selectedAttributeId);
+                if (attribute) {
+                    let valueIndex = attribute.values.findIndex(value => value.id === valueId);
+                    
+                    if (valueIndex === -1) {
+                        attribute.values.push({ id: valueId, name: valueName });
+                        $(this).removeClass('btn-primary').addClass('btn-secondary').text("Đã chọn");
+                    } else {
+                        attribute.values.splice(valueIndex, 1);
+                        $(this).removeClass('btn-secondary').addClass('btn-primary').text("Chọn");
+                    }
+                }
+
+                renderAttributes();
+            });
+
+            // Cập nhật giao diện
+            function renderAttributes() {
+                attributes.forEach(attribute => {
+                    let valueContainer = $(`#valueList-${attribute.id}`);
+                    valueContainer.html(attribute.values.map(value => `
+                        <div class="value-item" data-value-id="${value.id}">
+                            <span>${value.name}</span>
+                            <button class="removeValue btn btn-danger btn-sm" data-value-id="${value.id}">Xóa</button>
+                        </div>
+                    `).join(''));
+                });
+            }
+
+            // Xóa giá trị khỏi nhóm thuộc tính
+$(document).on('click', '.removeValue', function() {
+  let valueId = $(this).data('value-id');
+  let attributeId = $(this).closest('.attribute-group').data('attribute-id');
+
+  // Tìm thuộc tính cần xóa giá trị
+  let attribute = attributes.find(attr => attr.id === attributeId);
+  if (attribute) {
+      // Xóa giá trị khỏi danh sách
+      attribute.values = attribute.values.filter(value => value.id !== valueId);
+  }
+
+  // Xóa phần tử khỏi giao diện
+  $(this).closest('.value-item').remove();
+});
+
+            // Hiển thị dữ liệu trong console
+            $('#logData').on('click', function() {
+                console.log("Danh sách Thuộc Tính:", attributes);
+            });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

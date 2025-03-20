@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Thuộc Tính</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .attribute-group {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .value-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            margin-top: 5px;
+            background-color: white;
+            border-radius: 4px;
+        }
+        .removeValue {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="container py-4">
+
+    <h2 class="text-center">Quản lý Thuộc Tính</h2>
+
+    <button id="addAttribute" class="btn btn-primary mb-3">Thêm Thuộc Tính</button>
+    <button id="generateTable" class="btn btn-success mb-3">Tạo Bảng Biến Thể</button>
+
+    <div id="attributeContainer"></div>
+
+    <h3 class="mt-4">Bảng Biến Thể</h3>
+    <table class="table mt-3" id="variantTable">
+        <thead>
+            <tr>
+                <th>Biến thể</th>
+                <th>Giá nhập</th>
+                <th>Giá bán</th>
+                <th>Số lượng</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        $(document).ready(function() {
+            let attributes = []; 
+
+            const availableAttributes = [
+                { id: 1, name: "Màu sắc", values: [{ id: 101, name: "Đỏ" }, { id: 102, name: "Xanh" }, { id: 103, name: "Vàng" }] },
+                { id: 2, name: "Kích thước", values: [{ id: 201, name: "X" }, { id: 202, name: "XL" }, { id: 203, name: "XXL" }] }
+            ];
+
+            $('#addAttribute').on('click', function() {
+                let attributeId = Date.now();
+                let attributeGroup = `
+                    <div class="attribute-group" data-attribute-id="${attributeId}">
+                        <select class="form-select attribute-select">
+                            <option value="">Chọn thuộc tính</option>
+                            ${availableAttributes.map(attr => `<option value="${attr.id}">${attr.name}</option>`).join('')}
+                        </select>
+                        <button class="btn btn-success mt-2 addValue" data-attribute-id="${attributeId}">Thêm Giá Trị</button>
+                        <div class="value-list mt-2" id="valueList-${attributeId}"></div>
+                    </div>
+                `;
+
+                $('#attributeContainer').append(attributeGroup);
+                attributes.push({ id: attributeId, attributeType: null, values: [] });
+            });
+
+            $(document).on('change', '.attribute-select', function() {
+                let attributeId = $(this).closest('.attribute-group').data('attribute-id');
+                let selectedAttribute = $(this).val();
+                let attribute = attributes.find(attr => attr.id === attributeId);
+                if (attribute) {
+                    attribute.attributeType = selectedAttribute;
+                    attribute.values = [];
+                    renderAttributes();
+                }
+            });
+
+            $(document).on('click', '.addValue', function() {
+                let attributeId = $(this).data('attribute-id');
+                let attribute = attributes.find(attr => attr.id === attributeId);
+                if (!attribute || !attribute.attributeType) {
+                    alert("Vui lòng chọn thuộc tính trước!");
+                    return;
+                }
+
+                let selectedAttribute = availableAttributes.find(attr => attr.id == attribute.attributeType);
+                let selectedValues = attribute.values.map(value => value.id);
+
+                let valueListHtml = selectedAttribute.values.map(value => {
+                    let isSelected = selectedValues.includes(value.id) ? 'selected' : ''; 
+                    let buttonClass = selectedValues.includes(value.id) ? 'btn-secondary' : 'btn-primary';
+                    return `
+                        <div class="value-item d-flex justify-content-between align-items-center ${isSelected}" data-value-id="${value.id}">
+                            <span>${value.name}</span>
+                            <button class="btn ${buttonClass} selectValue" data-value-id="${value.id}" data-value-name="${value.name}">
+                                ${isSelected ? "Đã chọn" : "Chọn"}
+                            </button>
+                        </div>
+                    `;
+                }).join('');
+
+                $('#valueList-' + attributeId).html(valueListHtml);
+            });
+
+            $(document).on('click', '.selectValue', function() {
+                let valueId = $(this).data('value-id');
+                let valueName = $(this).data('value-name');
+                let attributeId = $(this).closest('.attribute-group').data('attribute-id');
+
+                let attribute = attributes.find(attr => attr.id === attributeId);
+                if (attribute) {
+                    let valueIndex = attribute.values.findIndex(value => value.id === valueId);
+                    
+                    if (valueIndex === -1) {
+                        attribute.values.push({ id: valueId, name: valueName });
+                        $(this).removeClass('btn-primary').addClass('btn-secondary').text("Đã chọn");
+                    } else {
+                        attribute.values.splice(valueIndex, 1);
+                        $(this).removeClass('btn-secondary').addClass('btn-primary').text("Chọn");
+                    }
+                }
+
+                renderAttributes();
+            });
+
+            $('#generateTable').on('click', function() {
+                let variants = generateVariants(attributes);
+                renderVariants(variants);
+            });
+
+            function generateVariants(attributes) {
+                if (attributes.length === 0) return [];
+
+                let allCombinations = attributes[0].values.map(value => [value]);
+
+                for (let i = 1; i < attributes.length; i++) {
+                    let newCombinations = [];
+                    attributes[i].values.forEach(value => {
+                        allCombinations.forEach(existingCombo => {
+                            newCombinations.push([...existingCombo, value]);
+                        });
+                    });
+
+                    allCombinations = newCombinations.length > 0 ? newCombinations : attributes[i].values.map(value => [value]);
+                }
+
+                return allCombinations;
+            }
+
+            function renderVariants(variants) {
+                $('#variantTable tbody').empty();
+                if (variants.length === 0) {
+                    $('#variantTable tbody').append('<tr><td colspan="5">Chưa có dữ liệu</td></tr>');
+                    return;
+                }
+
+                variants.forEach(variant => {
+                    let row = `
+                        <tr>
+                            <td>${variant.map(v => `${v.name}`).join(" - ")}</td>
+                            <td><input type="number" value="0" class="form-control cost-price"></td>
+                            <td><input type="number" value="0" class="form-control sale-price"></td>
+                            <td><input type="number" value="0" class="form-control stock-quantity"></td>
+                            <td><button class="btn btn-danger remove-row">🗑</button></td>
+                        </tr>
+                    `;
+                    $('#variantTable tbody').append(row);
+                });
+            }
+
+            $(document).on('click', '.remove-row', function() {
+                $(this).closest('tr').remove();
+            });
+        });
+    </script>
+</body>
+</html>

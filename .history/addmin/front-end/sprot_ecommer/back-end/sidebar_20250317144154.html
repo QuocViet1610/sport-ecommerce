@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chọn Giá Trị (Nhiều Nhóm)</title>
+    <style>
+        .option-group {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .option-item {
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin: 5px;
+            display: inline-block;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .selected {
+            background-color: lightgreen;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Chọn giá trị</h2>
+
+    <!-- Nhóm 1: Màu sắc -->
+    <div class="option-group" data-group="color">
+        <h3>Màu sắc</h3>
+        <div class="option-item" onclick="toggleSelection(this, 'color')">Đỏ</div>
+        <div class="option-item" onclick="toggleSelection(this, 'color')">Xanh</div>
+        <div class="option-item" onclick="toggleSelection(this, 'color')">Vàng</div>
+    </div>
+    <p><strong>Màu đã chọn:</strong> <span id="selectedValues-color">Không có</span></p>
+
+    <!-- Nhóm 2: Kích thước -->
+    <div class="option-group" data-group="size">
+        <h3>Kích thước</h3>
+        <div class="option-item" onclick="toggleSelection(this, 'size')">S</div>
+        <div class="option-item" onclick="toggleSelection(this, 'size')">M</div>
+        <div class="option-item" onclick="toggleSelection(this, 'size')">L</div>
+    </div>
+    <p><strong>Kích thước đã chọn:</strong> <span id="selectedValues-size">Không có</span></p>
+
+    <script>
+        function toggleSelection(element, group) {
+            // Toggle class "selected" để bật/tắt chọn
+            element.classList.toggle("selected");
+
+            // Cập nhật danh sách giá trị đã chọn cho nhóm cụ thể
+            updateSelectedValues(group);
+        }
+
+        function updateSelectedValues(group) {
+            // Lấy tất cả phần tử được chọn trong nhóm
+            let selectedElements = document.querySelectorAll(`.option-group[data-group="${group}"] .option-item.selected`);
+
+            // Lấy danh sách text của giá trị đã chọn
+            let selectedTexts = Array.from(selectedElements).map(el => el.textContent);
+
+            // Cập nhật nội dung hiển thị cho nhóm
+            document.getElementById(`selectedValues-${group}`).textContent = selectedTexts.length > 0 
+                ? selectedTexts.join(", ") 
+                : "Không có";
+        }
+    </script>
+
+</body>
+</html>

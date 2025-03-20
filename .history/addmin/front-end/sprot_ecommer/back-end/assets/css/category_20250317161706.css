@@ -1,0 +1,117 @@
+  /* Giảm khoảng cách giữa các cột */
+  .table th, .table td {
+    text-align: left; 
+    vertical-align: middle; 
+    padding: 4px 8px; 
+    word-break: break-word; 
+    white-space: normal;
+    overflow-wrap: break-word; 
+    padding: 4px 8px !important;
+}
+
+.table {
+    table-layout: fixed; 
+    width: 100%;
+    border-collapse: collapse;
+}
+.table tr {
+    padding: 10px;
+    padding-bottom: 10px; 
+    border-bottom: 1px solid  #ddd ! important;
+}
+/* Giảm cỡ chữ cho các ô trong bảng */
+.table th {
+    font-size: 14px; 
+    padding: 8px 8px !important; 
+    font-weight: 900 !important;
+    background-color: #d4edda !important; 
+}
+
+.table td {
+    font-size: 12px; /* Nhỏ hơn mặc định */
+    padding: 4px 8px !important;
+    font-weight: normal !important;
+    color: #000000 !important;; 
+}
+/* Ẩn dòng con mặc định */
+.product-variants {
+    display: none;
+}
+
+/* Cấu hình kích thước cột */
+.table th:nth-child(1), .table td:nth-child(1) { width: 25%; } /* Cột ảnh */
+.table th:nth-child(2), .table td:nth-child(2) { width: 25%; } /* Mã sản phẩm */
+.table th:nth-child(3), .table td:nth-child(3) { width: 25%; } /* Tên sản phẩm */
+.table th:nth-child(4), .table td:nth-child(4) { width: 25%; } /* Thể loại */
+
+
+/* Giữ nguyên kích thước ảnh nhỏ gọn */
+.table-image img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+/* Điều chỉnh cột thao tác */
+.table ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 5px;
+    justify-content: left;
+    flex-wrap: wrap; 
+}
+
+.table ul li {
+    display: inline-block;
+}
+
+/* Điều chỉnh icon trong cột thao tác */
+.table ul li a i {
+    font-size: 18px;
+    color: #333;
+    transition: color 0.3s;
+    text-align: center;
+}
+
+.table ul li a i:hover {
+    color: #007bff;
+}
+
+
+small-img {
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border 0.3s;
+}
+
+.small-img:hover, .small-img.active {
+    border: 2px solid #007bff;
+}
+.d-flex {
+    display: flex;
+    flex-wrap: wrap; /* Cho phép xuống dòng */
+    gap: 10px; /* Khoảng cách giữa các ảnh */
+}
+/* Tạo border bao gồm cả dòng cha và dòng con */
+.product-group {
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+/* Làm nổi bật dòng cha */
+.product-row {
+    background: #f8f9fa;
+    font-weight: bold;
+}
+
+/* Thụt dòng con vào trong dòng cha */
+.child-row td {
+    padding: 0;
+    background: #ffffff;
+}
