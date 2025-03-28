@@ -111,6 +111,11 @@ public final class SearchSpecificationUtil {
         return !StringUtils.isBlank(value) ? (r, q, b) -> b.like(b.upper(r.get(key)), likeSpecialToStr(value).toUpperCase() + "%") : null;
     }
 
+    public static <T> Specification<T> likeFieldEndWith(String key, String value) {
+        return !StringUtils.isBlank(value) ? (r, q, b) -> b.like(b.upper(r.get(key)), "%"+likeSpecialToStr(value).toUpperCase()) : null;
+    }
+
+
     public static <T> Specification<T> or(Map<String ,String> condition){
         if(condition.isEmpty()) return null;
         return (root, query, criteriaBuilder) -> {
