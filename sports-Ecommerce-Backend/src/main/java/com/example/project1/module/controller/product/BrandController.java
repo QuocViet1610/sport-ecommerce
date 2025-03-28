@@ -3,6 +3,7 @@ package com.example.project1.module.controller.product;
 import com.example.project1.middleware.annotation.TrimAndValid;
 import com.example.project1.model.dto.ResponseResult;
 import com.example.project1.model.dto.product.BrandDto;
+import com.example.project1.model.dto.product.CategoryDto;
 import com.example.project1.model.dto.request.product.BrandBaseRequest;
 import com.example.project1.model.dto.request.product.BrandSearchRequest;
 import com.example.project1.module.PageableCustom;
@@ -59,5 +60,8 @@ public class BrandController {
         }
     }
 
-
+    @GetMapping()
+    public ResponseResult<List<BrandDto>> updateCategory() {
+        return ResponseResult.ofSuccess(brandService.getAll());
+    }
 }

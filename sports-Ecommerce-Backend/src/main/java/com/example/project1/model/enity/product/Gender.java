@@ -7,7 +7,6 @@ import lombok.Setter;
 
 @Table(name = "gender")
 @Entity
-@Data
 @Setter
 @Getter
 public class Gender {

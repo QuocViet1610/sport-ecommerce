@@ -14,6 +14,8 @@ import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ReflectionUtils;
 
@@ -27,6 +29,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Slf4j
+@Component
 public class DataUtils {
 
     public static void trimValues(Object model) {
@@ -174,10 +177,9 @@ public class DataUtils {
     }
 
 
-    public static String createCodeByKey(String key) {
-        String idPart = String.format("%06d", new Random().nextInt(1000000));
+    public static String createCodeByKey(String key, String codeNumber) {
         key = getCode(key);
-        String transactionCode = key + idPart;
+        String transactionCode = key + codeNumber;
 
         return transactionCode;
     }
@@ -198,6 +200,31 @@ public class DataUtils {
         }
 
         return initials.toString().toUpperCase();
+    }
+
+    private static String minioHost;
+    private static String bucketName;
+    @Value("${app.minio.bucketName}")
+    public void setBucketName(String bucketName) {
+        DataUtils.bucketName = bucketName;
+    }
+
+
+    @Value("${app.minio.host}")
+    public void setMinioHost(String minioHost) {
+        DataUtils.minioHost = minioHost;
+    }
+
+
+    public static String convertUrl(String url) {
+        String tmp_Url = "";
+        if (!DataUtils.isNullOrEmpty(url)) {
+            if (url.contains(minioHost) || url.contains("https://assets.plugshare.com"))
+                tmp_Url = url;
+            else
+                tmp_Url = minioHost+ bucketName+"/" + url;
+        }
+        return tmp_Url;
     }
 
 }

@@ -1,9 +1,12 @@
 package com.example.project1.model.dto.product;
 
 import com.example.project1.model.dto.BaseDto;
+import com.example.project1.model.enity.product.ProductVariant;
+import jakarta.persistence.metamodel.ListAttribute;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 public class ProductDto extends BaseDto {

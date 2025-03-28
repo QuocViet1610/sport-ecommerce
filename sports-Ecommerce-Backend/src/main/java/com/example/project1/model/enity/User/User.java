@@ -1,12 +1,15 @@
 package com.example.project1.model.enity.User;
 
 import com.example.project1.model.BaseEntity;
+import com.example.project1.model.enity.product.ProductRating;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.OffsetDateTime;
+import java.util.Set;
 
 @Table(name = "users")
 @Entity
@@ -50,4 +53,8 @@ public class User  {
 
     @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private Set<ProductRating> productRatings ;
 }

@@ -74,9 +74,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new ValidateException(Translator.toMessage("error.user.password.mismatch"));
         }
 
-//        String otp = userVerificationService.generateOtp();
-//        emailService.sendVerificationEmail(request.getEmail(), otp);
-//        userVerificationService.saveOtp(request, otp);
+        String otp = userVerificationService.generateOtp();
+        emailService.sendVerificationEmail(request.getEmail(), otp);
+        userVerificationService.saveOtp(request, otp);
 
         return true;
     }

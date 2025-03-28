@@ -59,5 +59,8 @@ public class CategoryController {
         }
     }
 
-
+    @GetMapping()
+    public ResponseResult<List<CategoryDto>> updateCategory() {
+        return ResponseResult.ofSuccess(categoryService.findAll());
+    }
 }

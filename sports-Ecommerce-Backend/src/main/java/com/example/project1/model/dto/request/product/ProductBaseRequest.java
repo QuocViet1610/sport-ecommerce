@@ -17,7 +17,8 @@ public class ProductBaseRequest {
     public ProductCreateRequest getData() {
         ObjectMapper objectMapper = new ObjectMapper();
         try{
-            return objectMapper.readValue(data, ProductCreateRequest.class);
+            ProductCreateRequest productCreateRequest= objectMapper.readValue(data, ProductCreateRequest.class);
+            return productCreateRequest;
         }catch (Exception e){
             log.error(e.getMessage());
             throw new ValidateException(Translator.toMessage("error.common.parameter.invalid"));

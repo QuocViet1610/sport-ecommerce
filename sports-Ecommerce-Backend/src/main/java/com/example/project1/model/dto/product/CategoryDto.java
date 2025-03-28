@@ -3,7 +3,7 @@ import lombok.Data;
 
 @Data
 public class CategoryDto {
-
+    private String id;
     private String name;
     private Long parentId;
     private String fullParentId;

@@ -10,7 +10,7 @@ spring:
     jpa:
         show-sql: true
         hibernate:
-            ddl-auto: update
+            ddl-auto: none
 
     mail:
         host: smtp.gmail.com
@@ -23,6 +23,11 @@ spring:
                     auth: true
                     starttls:
                         enable: true
+
+    servlet:
+        multipart:
+            max-file-size: 10MB
+            max-request-size: 50MB
 
 api:
     prefix: /api/v1

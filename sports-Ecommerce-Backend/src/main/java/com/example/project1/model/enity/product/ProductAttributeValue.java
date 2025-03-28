@@ -1,5 +1,7 @@
 package com.example.project1.model.enity.product;
 
+import com.example.project1.model.dto.view.product.ProductView;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -7,7 +9,6 @@ import lombok.Setter;
 
 @Table(name = "product_attribute_value")
 @Entity
-@Data
 @Setter
 @Getter
 public class ProductAttributeValue  {
@@ -23,10 +24,16 @@ public class ProductAttributeValue  {
 
     @ManyToOne
     @JoinColumn(name = "attribute_value_id", nullable = false, insertable = false, updatable = false)
-    private Attribute attributeValue;
+    @JsonIgnore
+    private AttributeValue attributeValue;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false, insertable = false, updatable = false)
+    @JsonIgnore
     private Product product;
-
+//
+//    @ManyToOne
+//    @JoinColumn(name = "product_id", nullable = false, updatable = false, insertable = false )
+//    @JsonIgnore
+//    private ProductView productView;
 }

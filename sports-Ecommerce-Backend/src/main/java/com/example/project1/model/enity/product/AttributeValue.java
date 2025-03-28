@@ -1,6 +1,8 @@
 package com.example.project1.model.enity.product;
 
 import com.example.project1.model.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -8,10 +10,9 @@ import lombok.Setter;
 
 @Table(name = "attribute_value")
 @Entity
-@Data
 @Setter
 @Getter
-public class AttributeValue extends BaseEntity {
+public class AttributeValue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,9 +22,9 @@ public class AttributeValue extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "attribute_id", insertable = false, updatable = false)
+    @JsonIgnore
     private Attribute attribute;
 
     @Column(nullable = false, length = 255)
     private String name;
-    
 }

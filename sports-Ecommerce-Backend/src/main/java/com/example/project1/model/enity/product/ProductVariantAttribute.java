@@ -5,23 +5,21 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Table(name = "product_variants")
+@Table(name = "product_variant_attribute")
 @Entity
-@Data
 @Setter
 @Getter
 public class ProductVariantAttribute {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "product_variant_id", nullable = false)
-    private Long productVariantId;
+
 
     @Column(name = "attribute_value_id", nullable = false)
     private Long attributeValueId;
 
     @ManyToOne
-    @JoinColumn(name = "product_variant_id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "product_variant_id")
     private ProductVariant productVariant;
 
     @ManyToOne

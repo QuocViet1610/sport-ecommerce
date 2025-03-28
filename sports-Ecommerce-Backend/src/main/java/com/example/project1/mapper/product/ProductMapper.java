@@ -26,6 +26,6 @@ public abstract class ProductMapper implements EntityMapper<ProductDto, Product>
     @Mapping(target = "updatedBy", expression = Constants.EXPRESSION.CURRENT_USER)
     @Mapping(target = "updatedAt", expression = Constants.EXPRESSION.CURRENT_DATE)
     @Mapping(target = "id",ignore = true)
-    @Mapping(target = "isActive",ignore = true)
+    @Mapping(target = "code",ignore = true)
     public abstract void partialUpdate(@MappingTarget Product product, ProductCreateRequest request);
 }

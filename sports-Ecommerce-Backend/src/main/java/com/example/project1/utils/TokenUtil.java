@@ -1,5 +1,7 @@
 package com.example.project1.utils;
 
+import com.example.project1.expection.ValidateException;
+import com.example.project1.local.Translator;
 import com.example.project1.model.Enum.LanguageEnum;
 import com.example.project1.model.enity.User.User;
 import com.example.project1.model.enity.User.UserRole;
@@ -66,6 +68,8 @@ public class TokenUtil {
                         Instant.now().plus(VALID_DURATION, ChronoUnit.SECONDS).toEpochMilli()))
                 .jwtID(UUID.randomUUID().toString())
                 .claim("scope", buildScope(user)) // phan quyen
+                .claim("userId", user.getId())
+                .claim("userName", user.getFullName())
                 .build();
 
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());
@@ -163,11 +167,19 @@ public class TokenUtil {
         if (principal instanceof UserDetails) {
             return ((UserDetails) principal).getUsername();
         } else if (principal instanceof Jwt) {
-            return ((Jwt) principal).getClaim("sub"); // Hoặc "preferred_username" tùy vào JWT cấu hình
+            return ((Jwt) principal).getClaim("sub");
         } else {
             return principal.toString();
         }
     }
 
+    public Long getCurrentUserId() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+        if (principal instanceof Jwt jwt) {
+            return jwt.getClaim("userId");
+        }
+
+        throw new ValidateException(Translator.toMessage("Sản phẩm không tồn tại"));
+    }
 }

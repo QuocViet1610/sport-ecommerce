@@ -24,13 +24,15 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 //@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class BrandImpl implements BrandService {
+public class BrandServiceImpl implements BrandService {
 
     private final BrandRepository brandRepository;
     private final BrandMapper brandMapper;
@@ -48,14 +50,23 @@ public class BrandImpl implements BrandService {
 
     private void validateLogic(BrandCreateRequest request, boolean isCreated) {
         if (isCreated) {
-            if (brandRepository.findByName(request.getName()).isPresent()) {
-                throw new ValidateException(Translator.toMessage("Thể loại đã tồn tại"));
+            Optional<Brand> existingBrand = brandRepository.findByName(request.getName());
+
+            if (existingBrand.isPresent() &&
+                    request.getName().equalsIgnoreCase(existingBrand.get().getName())) {
+
+                throw new ValidateException(Translator.toMessage("Thương hiệu đã tồn tại"));
             }
         } else {
-            if (brandRepository.findByNameAndIdNot(request.getName(), request.getId()).isPresent()) {
-                throw new ValidateException(Translator.toMessage("Thể loại đã tồn tại"));
+            Optional<Brand> existingBrandExit = brandRepository.findByNameAndIdNot(request.getName(), request.getId());
+
+            if (existingBrandExit.isPresent() &&
+                    request.getName().equalsIgnoreCase(existingBrandExit.get().getName())) {
+
+                throw new ValidateException(Translator.toMessage("Thương hiệu đã tồn tại"));
             }
         }
+
     }
 
     @Override
@@ -107,5 +118,10 @@ public class BrandImpl implements BrandService {
             brandRepository.save(brand);
             return brandMapper.toDto(brand);
         }).orElseThrow(() -> new ValidateException(Translator.toMessage("error.category.id.not_exist")));
+    }
+
+    @Override
+    public List<BrandDto> getAll() {
+        return brandMapper.toDto(brandRepository.findAll());
     }
 }

@@ -4,12 +4,20 @@ import com.example.project1.middleware.annotation.TrimAndValid;
 import com.example.project1.model.dto.ResponseResult;
 import com.example.project1.model.dto.product.ProductDto;
 import com.example.project1.model.dto.request.product.ProductBaseRequest;
+import com.example.project1.model.dto.request.product.ProductSearchRequest;
+import com.example.project1.model.dto.view.product.ProductView;
+import com.example.project1.model.dto.view.product.ProductViewDto;
+import com.example.project1.module.PageableCustom;
 import com.example.project1.module.product.service.ProductService;
+import com.example.project1.utils.DataUtils;
+import jakarta.websocket.server.PathParam;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/product")
@@ -31,7 +39,7 @@ public class ProductController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseResult<ProductDto> updateCategory(@PathVariable Long id, @ModelAttribute @TrimAndValid ProductBaseRequest request) {
+    public ResponseResult<ProductDto> update(@PathVariable Long id, @ModelAttribute @TrimAndValid ProductBaseRequest request) {
         return ResponseResult.ofSuccess(productService.update(request, id));
     }
 
@@ -41,17 +49,26 @@ public class ProductController {
         return ResponseResult.ofSuccess();
     }
 
-//    @PostMapping("/search")
-//    public ResponseResult<Object> search(@RequestBody @TrimAndValid CategorySearchRequest searchRequest,
-//                                         @PathParam("page") int page,
-//                                         @PathParam("size") int size,
-//                                         @RequestParam(name="sort", required=false) List<String> sort) {
-//        if (!DataUtils.isNullOrEmpty(page) && page >= 0) {
-//            return ResponseResult.ofSuccess(productService.search(searchRequest, PageableCustom.setPageableCustom(page, size, sort)));
-//        } else {
-//            return ResponseResult.ofSuccess(productService.search(searchRequest, PageableCustom.setPageableCustom(0, size, sort,true)));
-//        }
-//    }
+    @GetMapping()
+    public ResponseResult<List<ProductViewDto>> get() {
+        return ResponseResult.ofSuccess(productService.getAll());
+    }
 
+    @PostMapping("/search")
+    public ResponseResult<Object> search(@RequestBody @TrimAndValid ProductSearchRequest searchRequest,
+                                         @PathParam("page") int page,
+                                         @PathParam("size") int size,
+                                         @RequestParam(name="sort", required=false) List<String> sort) {
+        if (!DataUtils.isNullOrEmpty(page) && page >= 0) {
+            return ResponseResult.ofSuccess(productService.search(searchRequest, PageableCustom.setPageableCustom(page, size, sort)));
+        } else {
+            return ResponseResult.ofSuccess(productService.search(searchRequest, PageableCustom.setPageableCustom(0, size, sort,true)));
+        }
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseResult<ProductViewDto> getDetail(@PathVariable Long id) {
+        return ResponseResult.ofSuccess(productService.getDetail(id));
+    }
 
 }
