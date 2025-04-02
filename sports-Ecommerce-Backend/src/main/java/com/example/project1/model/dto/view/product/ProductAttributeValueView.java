@@ -1,6 +1,7 @@
 package com.example.project1.model.dto.view.product;
 
 import com.example.project1.model.dto.product.AttributeValueDTO;
+import com.example.project1.model.dto.view.product.PrimaryKey.ProductAttributeValueViewId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,16 +16,24 @@ import java.util.List;
 @Table(name = "product_attribute_value_view")
 @Getter
 @Setter
+@IdClass(ProductAttributeValueViewId.class)
 public class ProductAttributeValueView {
+//    @Id
+//    @Column(name = "product_id")
+//    private Long productId;
     @Id
     @Column(name = "product_id")
     private Long productId;
 
+    @Id
+    @Column(name = "attribute_id")
+    private Long attributeId;
+
     @Column(name = "product_name")
     private String productName;
 
-    @Column(name = "attribute_id")
-    private Long attributeId;
+//    @Column(name = "attribute_id")
+//    private Long attributeId;
 
     @Column(name = "attribute_name")
     private String attributeName;

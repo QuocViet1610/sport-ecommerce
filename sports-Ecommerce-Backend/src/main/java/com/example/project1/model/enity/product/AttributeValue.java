@@ -27,4 +27,5 @@ public class AttributeValue {
 
     @Column(nullable = false, length = 255)
     private String name;
+
 }

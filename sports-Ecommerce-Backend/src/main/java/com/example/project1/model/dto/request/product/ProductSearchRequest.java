@@ -9,5 +9,6 @@ public class ProductSearchRequest {
     private Long categoryId;
     private Long genderId;
     private String fullParentId;
+    private Long categorySearch;
 }
 

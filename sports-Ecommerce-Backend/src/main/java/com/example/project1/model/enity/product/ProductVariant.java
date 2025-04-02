@@ -25,6 +25,7 @@ public class ProductVariant extends BaseEntity {
     private Long productId;
 
     private String image ;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false, updatable = false, insertable = false )

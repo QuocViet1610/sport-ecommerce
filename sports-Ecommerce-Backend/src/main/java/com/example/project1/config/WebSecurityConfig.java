@@ -49,7 +49,10 @@ public class WebSecurityConfig {
             Pair.of("/auth/register", HttpMethod.POST),
             Pair.of("/auth/verify-otp", HttpMethod.POST),
             Pair.of("/api/v1/auth/login", HttpMethod.POST),
-            Pair.of("/auth/send-otp", HttpMethod.POST)
+            Pair.of("/auth/send-otp", HttpMethod.POST),
+            Pair.of("/category", HttpMethod.GET),
+            Pair.of("/product/search", HttpMethod.POST),
+            Pair.of("/product/*", HttpMethod.GET),
     };
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

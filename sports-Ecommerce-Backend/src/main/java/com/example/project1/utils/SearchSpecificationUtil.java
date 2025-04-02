@@ -31,6 +31,23 @@ public final class SearchSpecificationUtil {
         return !StringUtils.isBlank(value) ? (r, q, b) -> b.like(b.upper(r.get(key)), "%" + likeSpecialToStr(value).toUpperCase() + "%") : null;
     }
 
+    public static <T> Specification<T> likeFieldCategory(String key, String value) {
+        return !StringUtils.isBlank(value) ? (r, q, b) -> b.or(
+                b.like(b.upper(r.get(key)), "%," + likeSpecialToStr(value).toUpperCase() + ",%"),
+                b.like(b.upper(r.get(key)), likeSpecialToStr(value).toUpperCase() + ",%"),
+                b.like(b.upper(r.get(key)), "%," + likeSpecialToStr(value).toUpperCase())
+        ) : null;
+    }
+
+    public static <T> Specification<T> equalIdConditionOr(String key, Long value) {
+        return value != null ? (r, q, b) -> b.or(
+                b.equal(r.get(key), value)
+        ) : null;
+    }
+
+
+
+
     /* Condition: key IN value */
     public static <T> Specification<T> inField(String key, Collection<?> values) {
         return !CollectionUtils.isEmpty(values) ? (r, q, b) -> r.get(key).in(values) : null;

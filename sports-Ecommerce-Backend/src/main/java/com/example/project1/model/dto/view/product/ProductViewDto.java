@@ -1,5 +1,6 @@
 package com.example.project1.model.dto.view.product;
 
+import com.example.project1.model.dto.product.ProductVariantDto;
 import com.example.project1.model.enity.product.ProductImage;
 import com.example.project1.model.enity.product.ProductVariant;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -34,7 +35,8 @@ public class ProductViewDto {
         private Long categoryId;
         private String categoryName;
         private String categoryImage;
-        private Set<ProductVariant> productVariants;
+        private Set<ProductVariantDto> productVariants;
+        private String fullParentId;
 //        private Set<ProductAttribute> productAttributes;
 //        private Set<ProductAttributeValue> productAttributeValues;
         private Set<ProductImage> productImages;

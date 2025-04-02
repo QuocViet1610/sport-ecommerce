@@ -180,6 +180,6 @@ public class TokenUtil {
             return jwt.getClaim("userId");
         }
 
-        throw new ValidateException(Translator.toMessage("Sản phẩm không tồn tại"));
+        throw new ValidateException(Translator.toMessage("Người dùng không tồn tại "));
     }
 }

@@ -214,9 +214,8 @@ public class ProductServiceImpl implements ProductService {
                 .and(SearchSpecificationUtil.equal("brandId", searchRequest.getBrandId()))
                 .and(SearchSpecificationUtil.equal("categoryId", searchRequest.getCategoryId()))
                 .and(SearchSpecificationUtil.equal("genderId", searchRequest.getGenderId()))
-                .and(SearchSpecificationUtil.likeField("fullParentId", searchRequest.getFullParentId()))
-                .and(SearchSpecificationUtil.likeFieldStartWith("fullParentId", searchRequest.getFullParentId()))
-                .and(SearchSpecificationUtil.likeFieldEndWith("fullParentId", searchRequest.getFullParentId()))
+                .and(SearchSpecificationUtil.likeFieldCategory("fullParentId", searchRequest.getFullParentId()))
+                .or(SearchSpecificationUtil.equal("categoryId", searchRequest.getCategorySearch()))
                 .and(SearchSpecificationUtil.or(mapCondition));
         if (!DataUtils.isNullOrEmpty(pageable) && !pageable.isFindAll()) {
             Page<ProductView> page = productViewRepository.findAll(conditions, pageable);
@@ -256,27 +255,28 @@ public class ProductServiceImpl implements ProductService {
             List<Long> productAttributeValueIds = productAttributeValues.stream()
                     .map(ProductAttributeValue::getAttributeValueId)
                     .collect(Collectors.toList());
+            if (!DataUtils.isNullOrEmpty(createRequest.getProductVariantCreateRequests())){
+                List<ProductVariant> productVariants =  createRequest.getProductVariantCreateRequests()
+                        .stream().map(
+                                variantRequest -> {
+                                    ProductVariant productVariant = productVariantMapper.toCreate(variantRequest);
+                                    productVariant.setProductId(product.getId());
 
-            List<ProductVariant> productVariants =  createRequest.getProductVariantCreateRequests()
-                    .stream().map(
-                            variantRequest -> {
-                                ProductVariant productVariant = productVariantMapper.toCreate(variantRequest);
-                                productVariant.setProductId(product.getId());
+                                    generateVariantCode(product, variantRequest, productVariant);
 
-                                generateVariantCode(product, variantRequest, productVariant);
-
-                                for (Long attributeValue: variantRequest.getVariantAttributeIds()){
-                                    if (!productAttributeValueIds.contains(attributeValue)){
-                                        throw new ValidateException(Translator.toMessage("Thuộc tính của biến thể không tồn tại"));
+                                    for (Long attributeValue: variantRequest.getVariantAttributeIds()){
+                                        if (!productAttributeValueIds.contains(attributeValue)){
+                                            throw new ValidateException(Translator.toMessage("Thuộc tính của biến thể không tồn tại"));
+                                        }
                                     }
-                                }
-                                Set<ProductVariantAttribute> variantAttributes = createVariantAttributes(variantRequest, productVariant);
-                                productVariant.setVariantAttributes(variantAttributes);
+                                    Set<ProductVariantAttribute> variantAttributes = createVariantAttributes(variantRequest, productVariant);
+                                    productVariant.setVariantAttributes(variantAttributes);
 
-                                return productVariant;
-                            }) .collect(Collectors.toList());
+                                    return productVariant;
+                                }) .collect(Collectors.toList());
 
-            List<ProductVariant> productVariantListSave =  productVariantRepository.saveAll(productVariants);
+                List<ProductVariant> productVariantListSave =  productVariantRepository.saveAll(productVariants);
+            }
 
         }
 

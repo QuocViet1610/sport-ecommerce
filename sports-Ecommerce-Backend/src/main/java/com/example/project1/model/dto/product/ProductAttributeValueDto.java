@@ -11,4 +11,6 @@
         private Long productId;
 
         private Long attributeValueId;
+
+
     }
