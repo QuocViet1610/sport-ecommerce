@@ -27,6 +27,8 @@ import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.antlr.v4.runtime.Token;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -112,19 +114,22 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void removeProductFromCart(Long cartItemId) {
-        CartItem cartItem = cartItemRepository.findById(cartItemId)
-                .orElseThrow(() -> new ValidateException("Sản phẩm trong giỏ hàng không tồn tại"));
-        cartItemRepository.delete(cartItem);
+        if (!cartItemRepository.existsById(cartItemId)) {
+            throw new ValidateException("Sản phẩm trong giỏ hàng không tồn tại");
+        }
+        cartItemRepository.deleteById(cartItemId);
     }
 
     @Override
-    public CartResponse getCartByUserId(Long userId) {
+    public CartResponse getCartByUserId() {
         // Lấy giỏ hàng của người dùng
+        Long userId = tokenUtil.getCurrentUserId();
         Cart cart = cartRepository.findByUserId(userId)
-                .orElseThrow(() -> new ValidateException("Giỏ hàng trống"));
+                .orElseThrow(() -> new ValidateException("Người dùng không tồn tại"));
 
 
         Set<CartItemResponse> cartItems = cart.getCartItems().stream()
+                .sorted(Comparator.comparing(CartItem::getId)) // Sắp xếp theo ID
                 .map(cartItem -> {
 
                     CartItemResponse cartItemResponse = cartItemMapper.toResponse(cartItem);
@@ -144,7 +149,7 @@ public class CartServiceImpl implements CartService {
 
                     return cartItemResponse;
                 })
-                .collect(Collectors.toSet());
+                .collect(Collectors.toCollection(LinkedHashSet::new));
 
         CartResponse cartResponse = cartMapper.toResponse(cart);
         cartResponse.setCartItems(cartItems);

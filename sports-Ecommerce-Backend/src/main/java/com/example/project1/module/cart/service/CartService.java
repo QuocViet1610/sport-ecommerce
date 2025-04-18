@@ -13,5 +13,5 @@ public interface CartService {
 
     void removeProductFromCart(Long cartItemId);
 
-    CartResponse getCartByUserId(Long userId);
+    CartResponse getCartByUserId();
 }

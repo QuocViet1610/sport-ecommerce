@@ -38,9 +38,9 @@ public class CartController {
     }
 
 
-    @GetMapping("/{userId}")
-    public ResponseResult<CartResponse> getCartByUserId(@PathVariable Long userId) {
-        return ResponseResult.ofSuccess(cartService.getCartByUserId(userId));
+    @GetMapping("")
+    public ResponseResult<CartResponse> getCartByUserId() {
+        return ResponseResult.ofSuccess(cartService.getCartByUserId());
     }
 
 
